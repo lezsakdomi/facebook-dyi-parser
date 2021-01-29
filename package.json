@@ -1,0 +1,14 @@
+{
+  "name": "facebook-dyi-parser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cli-progress": "^3.8.2",
+    "exceljs": "^4.2.0",
+    "image-size": "^0.9.3",
+    "minimist": "^1.2.5",
+    "node-fetch": "^2.6.1",
+    "uniqolor": "^1.0.1"
+  }
+}
