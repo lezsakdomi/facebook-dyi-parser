@@ -22,7 +22,7 @@ const rl = readline.createInterface({
 Usage:
     ${process.argv0} -h
     ${process.argv0} --help
-    ${process.argv0} [-v] [-o|--output=facebook-messages.xlsx] [-i|--in-place] [-f|--force] [--] [path]
+    ${process.argv0} [-v] [-o|--output=facebook-messages.xlsx] [-i|--in-place] [-f|--force] [--no-images] [--] [path]
     
     -o, --output file.xlsx
 		filename to write workbook to
@@ -32,12 +32,16 @@ Usage:
     
 	-f, --force
 		force overwrite file even if exists
+		
+	--no-images
+		Reduce XLSX weight by not embedding images
 `)
 	} else {
 		const verbose = !!args['v'] || !!args['verbose']
 		const output = args['output'] || args['o'] || "facebook-messages.xlsx"
 		const inPlace = !!args['in-place'] || !!args['i']
 		const force = !!args['force'] || !!args['f']
+		const noImages = args['images'] === false
 
 		const workbook = new exceljs.Workbook()
 		if (inPlace) await workbook.xlsx.readFile(output)
@@ -82,10 +86,11 @@ Usage:
 		let lastRow = undefined
 
 		async function addImage(cell, uri, options = {}) {
-			if (uri.match(/^https?:\/\/interncache-prn.fbcdn.net\//)) {
+			if (noImages || uri.match(/^https?:\/\/interncache-prn.fbcdn.net\//)) {
 				if (options.hyperlinks) {
 					cell.value = {
 						text: "❎ Broken thumbnail",
+						hyperlink: uri.match(/^(https?|file):\/\//) ? uri : getFileLink(uri),
 						...options.hyperlinks,
 					}
 				}
