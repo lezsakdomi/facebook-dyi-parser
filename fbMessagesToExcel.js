@@ -24,6 +24,9 @@ Usage:
     ${process.argv0} --help
     ${process.argv0} [-v] [-o|--output=facebook-messages.xlsx] [-i|--in-place] [-f|--force] [--no-images] [--] [path]
     
+    -v, --verbose
+    	Verbose output
+    
     -o, --output file.xlsx
 		filename to write workbook to
     
@@ -380,6 +383,10 @@ Usage:
 		}
 
 		multibar.stop()
+
+		if (verbose) {
+			console.log("Columns: %o", sheet.columns)
+		}
 
 		console.log("Writing to %s...", output)
 		await workbook.xlsx.writeFile(output)
