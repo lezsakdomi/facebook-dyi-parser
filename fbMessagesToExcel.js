@@ -364,7 +364,7 @@ Usage:
 							})
 							const {reaction, actor} = o
 							lastRow.getCell(`reaction/${actor}`).value = (lastRow.getCell(`reaction/${actor}`).value || "") + reaction
-							setColor(sheet.lastRow.getCell(`reaction/${actor}`), actor)
+							setColor(lastRow.getCell(`reaction/${actor}`), actor)
 						}
 					}
 
