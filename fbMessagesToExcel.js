@@ -363,6 +363,13 @@ Usage:
 								actor: true,
 							})
 							const {reaction, actor} = o
+
+							try {
+								lastRow.getCell(`reaction/${actor}`)
+							} catch (e) {
+								sheet.columns = [...sheet.columns, {key: `reaction/${actor}`}]
+							}
+
 							lastRow.getCell(`reaction/${actor}`).value = (lastRow.getCell(`reaction/${actor}`).value || "") + reaction
 							setColor(lastRow.getCell(`reaction/${actor}`), actor)
 						}
